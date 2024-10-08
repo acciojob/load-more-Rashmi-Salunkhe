@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import './../styles/App.css';
 
 const items = [
@@ -36,9 +36,25 @@ const items = [
 ];
 
 const App = () => {
+  const[itemsList, setItemsList]=useState([]);
+
+ function loadMore(){
+     setTimeout(()=>{
+      setItemsList(prevItemsList => {
+        const newItems = items.slice(prevItemsList.length, prevItemsList.length + 10);
+        return [...prevItemsList, ...newItems];
+      });
+     }, 2000);
+    
+ }
   return (
     <div>
-        {/* Do not remove the main div */}
+      <ul>
+        {
+          itemsList.map(item=> <li>{item}</li>)
+        }
+      </ul>
+        <button onClick={loadMore}>Load More</button>
     </div>
   )
 }
